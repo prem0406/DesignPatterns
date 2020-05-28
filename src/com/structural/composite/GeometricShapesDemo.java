@@ -4,9 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+/*
+ * In other Examples, Abstract class is used instead of simple class, so that a simple class and a composite
+ * class both can inherit from this abstract class
+ */
 class GraphicObject
 {
   protected String name = "Group";
+  public String color;
+  
+  public List<GraphicObject> children = new ArrayList<>();
 
   public String getName()
   {
@@ -22,16 +30,20 @@ class GraphicObject
   {
   }
 
-  public String color;
-  public List<GraphicObject> children = new ArrayList<>();
+ 
 
   private void print(StringBuilder stringBuilder,  int depth)
   {
+	  //This part is will work for single objects
     stringBuilder.append(String.join("", Collections.nCopies(depth, "*")))
       .append(depth > 0 ? " " : "")
       .append((color == null || color.isEmpty()) ? "" : color + " ")
       .append(getName())
       .append(System.lineSeparator());
+    
+    //used recursion to print composite objects, if composite objects are not present then it acts as single object
+    
+    //this part will work for composite objects
     for (GraphicObject child : children)
       child.print(stringBuilder,  depth+1);
   }
